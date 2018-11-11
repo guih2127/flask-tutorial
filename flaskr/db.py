@@ -1,5 +1,12 @@
-import sqlite3
+# aqui criamos uma conexão com o sqlite, qualquer query
+# e operação feita no banco será feita utilizando
+# essa conexão, que é finalizada depois de terminado o trabalho.
 
+# em aplicações web, a conexão está tipicamente ligada a uma requisição.
+# ela é criada em algum ponto quando lidamos com a requisição e fechada
+# quando ela é terminada
+
+import sqlite3
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
@@ -34,6 +41,17 @@ def init_db_command():
     init_db()
     click.echo('Initialized the database.')
 
+# aqui definimos um comando para o terminal, 'init-db',
+# que chhama a função init_db e mostra uma mensagem de 
+# sucesso.
+
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+
+# para usarmos nossas funções definidas inicialmente, 
+# precisamos registrá-las na instância da aplicação,
+# porém, como estamos utilizando uma factory function,
+# a instância não está disponível para outras funções.
+# inves disso, criamos a função que receba a aplicação
+# e faz o registro.

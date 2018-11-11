@@ -1,12 +1,12 @@
 # uma aplicação flask é uma instância da classe flask
-# tudo sobre a aplicação, como config e urls ficará aqui
+# tudo sobre a aplicação, como config e urls ficará aqui.
 # para nao termos problemas no futuro, criaremos ela dentro
 # de uma função, a 'fábrica da aplicação'
 
 # application factory
 import os
 from flask import Flask
-from . import db
+from . import db, auth
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -26,6 +26,7 @@ def create_app(test_config=None):
         pass
     
     db.init_app(app)
+    app.register_blueprint(auth.bp)
     
     @app.route('/hello')
     def hello():
