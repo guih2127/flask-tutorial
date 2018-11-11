@@ -9,7 +9,7 @@ from flaskr.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-# criamos uma blueprinth noemada de auth, a url_prefix
+# criamos uma blueprinth nomeada de auth, a url_prefix
 # definida será extendida para todas as url
 # associadas com essa blueprint
 
