@@ -28,24 +28,24 @@ def register():
         elif db.execute(
             'SELECT id FROM user WHERE username = ?', (username,)
         ).fetchone() is not None:
-            error = 'Usuárrio {} já está registrado.'.format(username)
+            error = 'Usuário {} já está registrado.'.format(username)
 
             # aqui validamos que username e password estão presente,
             # verificamos também se o usuário não existe, com o ultimo elif
     
-    if error is None:
-        db.execute(
-            'INSERT INTO user (username, password) VALUES (?, ?)',
-            (username, generate_password_hash(password))
-        )
-        db.commit()
-        return redirect(url_for('auth_login'))
+        if error is None:
+            db.execute(
+                'INSERT INTO user (username, password) VALUES (?, ?)',
+                (username, generate_password_hash(password))
+            )
+            db.commit()
+            return redirect(url_for('auth.login'))
 
-            # se não existir nenhum erro, o registro será feito
-    
-    flash(error)
+                # se não existir nenhum erro, o registro será feito
+        
+        flash(error)
 
-    return render_template('auth/register.html')
+    return render_template('register.html')
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
@@ -73,7 +73,7 @@ def login():
 
         flash(error)
 
-    return render_template('auth/login.html')
+    return render_template('login.html')
 
             # session é um dicionário que guarda dados entre as requisições
             # se o usuário logar com sucesso, seu id será guardado em uma nova
