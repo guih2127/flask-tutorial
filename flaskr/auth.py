@@ -88,7 +88,7 @@ def load_logged_in_user():
     else:
         g.user = get_db().execute(
             'SELECT * FROM user WHERE id = ?', (user_id,)
-        )
+        ).fetchone()
 
         # before_app_request registra uma função que roda antes da função view,
         # não importa qual URL seja requisitada, a função load_logged_in_user

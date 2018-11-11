@@ -6,7 +6,7 @@
 # application factory
 import os
 from flask import Flask
-from . import db, auth
+from . import db, auth, blog
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -26,10 +26,14 @@ def create_app(test_config=None):
         pass
     
     db.init_app(app)
+    app.register_blueprint(blog.bp)
+    app.add_url_rule('/', endpoint='index') 
+
+    # obs: com o add_url_rule configuramos para que seja feita uma
+    # associação do endpoint 'index' com o '/', já que definimos
+    # o index dentro de blog. assim, tanto blog.index quanto index
+    # funcionaram nesse caso
+
     app.register_blueprint(auth.bp)
-    
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
     
     return app
