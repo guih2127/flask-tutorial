@@ -43,6 +43,12 @@ def index():
     # a view do nosso index trará todos os posts do usuário,
     # através de um join, ordenando os posts pela data criada.
 
+@bp.route('/<int:id>/')
+def detail(id):
+    post = get_post(id)
+
+    return render_template('detail.html', post=post)
+
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
